@@ -36,14 +36,24 @@ const theme = createTheme({
 					background: '#121212',
 					backgroundImage: 'linear-gradient(45deg, rgba(18,28,24,1) 0%, rgba(18,18,18,1) 40%)',
 					color: '#F0F0F0',
-					fontWeight: '400'
+					fontWeight: '400',
+					overflowX: 'hidden'
 				},
 				button: {
 					cursor: 'pointer'
 				},
 				a: {
 					textDecoration: 'none'
-				}
+				},
+					'*::-webkit-scrollbar': {
+						width: '0.4em'
+					},
+					'*::-webkit-scrollbar-track': {
+						backgroundColor: 'rgba(0,0,0,.1)',
+					},
+					'*::-webkit-scrollbar-thumb': {
+						backgroundColor: 'rgba(19,218,135,1)'
+					}
 			}
 		},
 

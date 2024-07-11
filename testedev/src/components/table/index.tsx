@@ -19,9 +19,9 @@ import { Box,
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { visuallyHidden } from '@mui/utils';
-import dayjs, { Dayjs } from 'dayjs';
 import CreateModal from '../modal';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 export interface Data {
   action: string;
@@ -46,22 +46,6 @@ function createData(
     action,
   };
 }
-
-export const rows = [
-  createData(1, 'Invest 1', 305.00, '22-04-2022', 'Visualize'),
-  createData(2, 'Invest 2', 452.00, '26-04-2022', 'Visualize'),
-  createData(3, 'Invest 3', 262.50, '17-12-2021', 'Visualize'),
-  createData(4, 'Invest 4', 159.00, '22-06-2002', 'Visualize'),
-  createData(5, 'Invest 5', 356.00, '02-02-2020', 'Visualize'),
-  createData(6, 'Invest 6', 408.00, '26-11-2023', 'Visualize'),
-  createData(7, 'Invest 7', 237.00, '23-04-2019', 'Visualize'),
-  createData(8, 'Invest 8', 375.00, '21-03-2023', 'Visualize'),
-  createData(9, 'Invest 9', 518.00, '28-01-2017', 'Visualize'),
-  createData(10, 'Invest 10', 392.00, '12-05-2021', 'Visualize'),
-  createData(11, 'Invest 11', 318.00, '12-06-2024', 'Visualize'),
-  createData(12, 'Invest 12', 360.00, '04-07-2009', 'Visualize'),
-  createData(13, 'Invest 13', 437.00, '13-09-2021', 'Visualize'),
-];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -263,10 +247,28 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
       )}
     </Toolbar>
   );
-}
+};
+
+export let rowView: Data;
 
 export default function InvestmentsTable() {
   const router = useRouter();
+
+  const [rows, setRows] = React.useState<Data[]>([
+    createData(1, 'Invest 1', 305.00, '22/04/2022', 'Visualize'),
+    createData(2, 'Invest 2', 452.00, '26/04/2022', 'Visualize'),
+    createData(3, 'Invest 3', 262.50, '17/12/2021', 'Visualize'),
+    createData(4, 'Invest 4', 159.00, '22/06/2002', 'Visualize'),
+    createData(5, 'Invest 5', 356.00, '02/02/2020', 'Visualize'),
+    createData(6, 'Invest 6', 408.00, '26/11/2023', 'Visualize'),
+    createData(7, 'Invest 7', 237.00, '23/04/2019', 'Visualize'),
+    createData(8, 'Invest 8', 375.00, '21/03/2023', 'Visualize'),
+    createData(9, 'Invest 9', 518.00, '28/01/2017', 'Visualize'),
+    createData(10, 'Invest 10', 392.00, '12/05/2021', 'Visualize'),
+    createData(11, 'Invest 11', 318.00, '12/06/2024', 'Visualize'),
+    createData(12, 'Invest 12', 360.00, '04/07/2009', 'Visualize'),
+    createData(13, 'Invest 13', 437.00, '13/09/2021', 'Visualize'),
+  ]);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -336,12 +338,18 @@ export default function InvestmentsTable() {
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [order, orderBy, page, rowsPerPage],
+    [order, orderBy, page, rows, rowsPerPage],
   );
+
+  const handleClickVisualize = (row: Data) => {
+    rowView = row;
+    Cookies.set('lastSeen', JSON.stringify(row));
+    router.push(`/visualize/${row.id}`);
+  }
 
   return (
     <Box sx={{ width: '100%', mt: '32px' }}>
-      <CreateModal open={open} handleClose={handleClose} />
+      <CreateModal open={open} handleClose={handleClose} setRows={setRows} rows={rows} />
       <Paper
         sx={{
           width: '100%',
@@ -405,7 +413,7 @@ export default function InvestmentsTable() {
                     <TableCell align="right" sx={{ color: '#fcfcfc' }}>{row.value}</TableCell>
                     <TableCell align="right" sx={{ color: '#fcfcfc' }}>{row.date}</TableCell>
                     <TableCell align="right" sx={{ color: '#fcfcfc' }}>
-                      <Button onClick={() => router.push(`/visualize/${row.id}`)}>{row.action}</Button>
+                      <Button onClick={() => handleClickVisualize(row)}>{row.action}</Button>
                     </TableCell>
                   </TableRow>
                 );
