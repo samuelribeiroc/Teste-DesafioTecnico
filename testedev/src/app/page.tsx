@@ -1,25 +1,36 @@
 'use client'
 import * as React from 'react';
-import { Container, Grid, Card } from "@mui/material";
-import PrimarySearchAppBar from "@/components/templates/menu";
+import { LocalizationProvider as MuiLocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { Grid, Card, Box } from "@mui/material";
 import PrimaryCard from '@/components/cards/home/primary';
 import InvestmentsTable from '@/components/table';
+import PageBody from '@/components/templates/layout/pageBody';
+import SecondaryCard from '@/components/cards/home/secondary';
 
 export default function Home() {
   return (
-    <Container sx={{ p: '0 !important', minHeight:'100vh' }} maxWidth={false}>
-      <PrimarySearchAppBar />
+    <MuiLocalizationProvider dateAdapter={AdapterDateFns}>
+      <PageBody>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: { md: 'calc(100% - 75px)', xs: '100%' }
+          }}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={8}>
+              <PrimaryCard />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <SecondaryCard />
+            </Grid>
+          </Grid>
 
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={8}>
-          <PrimaryCard />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Card>aaaa</Card>
-        </Grid>
-      </Grid>
-
-      <InvestmentsTable />
-    </Container>
+          <InvestmentsTable />
+        </Box>
+      </PageBody>
+    </MuiLocalizationProvider>
   );
 }

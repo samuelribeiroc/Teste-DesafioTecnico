@@ -4,6 +4,8 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/theme';
+import { Container } from '@mui/material';
+import PrimarySearchAppBar from '@/components/templates/layout/menu';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +20,22 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           <ThemeProvider theme={theme}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            {props.children}
+
+            <Container
+              sx={{
+                p: '0 !important',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                minHeight: '100dvh',
+                width: '100dvw'
+              }}
+              maxWidth={false}
+            >
+              <PrimarySearchAppBar />
+              {props.children}
+            </Container>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

@@ -33,10 +33,10 @@ const theme = createTheme({
 					margin: '0',
 					padding: '0',
 					boxSizing: 'border-box',
-					backgroundColor: '#121212',
+					background: '#121212',
+					backgroundImage: 'linear-gradient(45deg, rgba(18,28,24,1) 0%, rgba(18,18,18,1) 40%)',
 					color: '#F0F0F0',
-					fontWeight: '400',
-					overflowX: 'hidden'
+					fontWeight: '400'
 				},
 				button: {
 					cursor: 'pointer'
