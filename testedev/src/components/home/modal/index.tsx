@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Box, Button, InputAdornment, InputLabel, Modal, OutlinedInput, TextField, Typography } from '@mui/material';
+import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { useRouter } from 'next/navigation';
 import { Data } from '../table';
+import InputNumber from '@/components/templates/inputNumber';
 
 interface ModalProps {
   open: boolean;
@@ -16,8 +16,6 @@ interface ModalProps {
 dayjs.extend(customParseFormat);
 
 export default function CreateModal({ open, handleClose, setRows, rows }: ModalProps) {
-  const router = useRouter();
-
   const [title, setTitle] = React.useState<string>('');
   const [value, setValue] = React.useState<number>(0);
   const [date, setDate] = React.useState<string>(dayjs().format('DD/MM/YYYY'));
@@ -31,20 +29,6 @@ export default function CreateModal({ open, handleClose, setRows, rows }: ModalP
     const newValue = event.target.value;
     if (!isNaN(newValue) && newValue >= 0) {
       setValue(parseFloat(newValue));
-    }
-  };
-
-  const handleBlur = () => {
-    setValue(value);
-  };
-
-  const handleFocus = () => {
-    setValue(value);
-  };
-
-  const handleKeyDown = (event: any) => {
-    if (['e', 'E', '+', '-', '.'].includes(event.key)) {
-      event.preventDefault();
     }
   };
 
@@ -111,28 +95,7 @@ export default function CreateModal({ open, handleClose, setRows, rows }: ModalP
               sx={{ mb: '20px' }}
             />
 
-            <InputLabel
-              htmlFor="outlined-adornment-amount"
-              sx={{ bottom: '-10px', left: '12px', fontSize: '12px' }}
-            >
-              Initial value *
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-amount"
-              label="Initial value"
-              type="number"
-              value={value}
-              onChange={handleChangeValue}
-              onBlur={handleBlur}
-              onFocus={handleFocus}
-              onKeyDown={handleKeyDown}
-              startAdornment={<InputAdornment position="start">R$</InputAdornment>}
-              inputProps={{ min: '0', step: "0.01" }}
-              placeholder={`0,00`}
-              required
-              fullWidth
-              sx={{ mb: '20px' }}
-            />
+            <InputNumber value={value} setValue={setValue} />
 
             <DatePicker
               label='Date'

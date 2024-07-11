@@ -189,8 +189,8 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
   return (
     <Toolbar
       sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
+        pl: 2,
+        pr: 2,
         ...(numSelected > 0 && {
           bgcolor: (theme) =>
             alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
@@ -208,7 +208,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: '1' }}
           variant="h6"
           id="tableTitle"
           component="div"
@@ -229,7 +229,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
             variant='contained'
             sx={{
               minWidth: '36px',
-              width: { md: '300px', sm: '36px', xs: '36px' },
+              width: { md: '280px', sm: '36px', xs: '36px' },
               padding: { md: '6px 16px', sm: '6px', xs: '6px' },
               borderRadius: { md: '16px', sm: '50px', xs: '50px' },
               display: { md: 'inherit', sm: 'flex', xs: 'flex !important' },
@@ -344,7 +344,7 @@ export default function InvestmentsTable() {
   const handleClickVisualize = (row: Data) => {
     rowView = row;
     Cookies.set('lastSeen', JSON.stringify(row));
-    router.push(`/visualize/${row.id}`);
+    router.push(`/view/${row.id}`);
   }
 
   return (

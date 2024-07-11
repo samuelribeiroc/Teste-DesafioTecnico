@@ -3,10 +3,10 @@ import * as React from 'react';
 import { LocalizationProvider as MuiLocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { Grid, Card, Box } from "@mui/material";
-import PrimaryCard from '@/components/cards/home/primary';
-import InvestmentsTable from '@/components/table';
+import PrimaryCard from '@/components/home/cards/primary';
+import InvestmentsTable from '@/components/home/table';
 import PageBody from '@/components/templates/layout/pageBody';
-import SecondaryCard from '@/components/cards/home/secondary';
+import SecondaryCard from '@/components/home/cards/secondary';
 
 export default function Home() {
   return (
